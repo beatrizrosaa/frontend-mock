@@ -84,6 +84,33 @@ O seu servidor local estará disponível em `http://localhost:5173`.
 
 ---
 
+
+## 🕵️ Mocking de API com MSW (Mock Service Worker)
+
+Este projeto usa o **MSW** para simular a API do backend em ambiente de desenvolvimento.
+
+### Como Funciona?
+
+* **Ativação:** O MSW é **ativado automaticamente** sempre que o projeto é executado localmente com `npm run dev` (graças à verificação `import.meta.env.DEV` no `src/main.tsx`).
+* **Operação:** Ele intercepta as chamadas de `fetch` no navegador e retorna respostas "mockadas" (falsas) definidas em `src/mocks/handlers.ts`.
+* **Bypass:** Se uma chamada de API não tiver um *handler* correspondente, ela será enviada para o backend real (ex: `https://postgresql.beatrizrosa.me/api`).
+
+### Como Desativar (Temporariamente)
+
+Se você estiver a rodar o `npm run dev` e quiser testar contra o **backend real** (em vez dos mocks), simplesmente comente a chamada `enableMocking()` no `src/main.tsx`:
+
+```tsx
+// src/main.tsx
+
+// Comente a linha abaixo para desativar o MSW
+// enableMocking().then(() => {
+  ReactDOM.createRoot(document.getElementById('root')!).render(
+    <React.StrictMode>
+      <App />
+    </React.StrictMode>
+  );
+// }); // E esta linha
+
 ## 🔗 Projetos Relacionados
 
 * **Repositório do Backend (API):** [https://github.com/beatrizrosaa/mini-projeto-postgresql](https://github.com/beatrizrosaa/mini-projeto-postgresql)
